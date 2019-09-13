@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -14,4 +14,106 @@
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 <script src="runtime-es2015.858f8dd898b75fe86926.js" type="module"></script><script src="polyfills-es2015.5728f680576ca47e99fe.js" type="module"></script><script src="runtime-es5.741402d1d47331ce975c.js" nomodule></script><script src="polyfills-es5.7f43b971448d2fb49202.js" nomodule></script><script src="main-es2015.d12c05e9b7d2ead2cce3.js" type="module"></script><script src="main-es5.9b1b2fe682097172cc84.js" nomodule></script></body>
+</html> -->
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <p>canvas</p>
+    <div>
+        
+        <button onclick=changecolor('#cb3594')>purple</button>
+        <button onclick=changecolor('#659b41')>green</button>
+        <button onclick=changecolor('#ffcf33')>yellow</button>
+        <button onclick=changecolor('#986928')>brown</button>
+        <button onclick=clearCanvas()>clear</button>
+
+        <div id="canvasDiv"></div>
+
+    </div>
+
+</body>
+<script>
+    var curColor = '#cb3594';
+    var clickColor = new Array();
+
+    var clickX = new Array();
+    var clickY = new Array();
+    var clickDrag = new Array();
+    var paint;
+
+    function changecolor(val){
+        curColor = val
+    }
+
+    function addClick(x, y, dragging) {
+        clickX.push(x);
+        clickY.push(y);
+        clickDrag.push(dragging);
+        clickColor.push(curColor);
+    }
+    
+    var canvasDiv = document.getElementById('canvasDiv');
+    canvas = document.createElement('canvas');
+    canvas.setAttribute('width', 1000);
+    canvas.setAttribute('height', 1000);
+    canvas.setAttribute('id', 'canvas');
+    canvasDiv.appendChild(canvas);
+    if (typeof G_vmlCanvasManager != 'undefined') {
+        canvas = G_vmlCanvasManager.initElement(canvas);
+    }
+    context = canvas.getContext("2d");
+    
+    document.getElementById("canvas").addEventListener("mousedown", (function (e) {
+        var mouseX = e.pageX - this.offsetLeft;
+        var mouseY = e.pageY - this.offsetTop;
+        
+        paint = true;
+        addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+        redraw();
+    }));
+    document.getElementById("canvas").addEventListener("mouseleave", (function (e) {
+        paint = false;
+    }));
+    document.getElementById("canvas").addEventListener("mouseup", (function (e) {
+        paint = false;
+    }));
+    
+    document.getElementById("canvas").addEventListener("mousemove", (function (e) {
+        if (paint) {
+            addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+            redraw();
+        }
+    }));
+    
+    
+    function redraw() {
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+        
+        // context.strokeStyle = curColor;
+        context.lineJoin = "round";
+        context.lineWidth = 5;
+        
+        for (var i = 0; i < clickX.length; i++) {
+            context.beginPath();
+            if (clickDrag[i] && i) {
+                context.moveTo(clickX[i - 1], clickY[i - 1]);
+            } else {
+                context.moveTo(clickX[i] - 1, clickY[i]);
+            }
+            context.lineTo(clickX[i], clickY[i]);
+            context.closePath();
+            context.strokeStyle = clickColor[i];
+            context.stroke();
+        }
+    }
+
+    function clearCanvas(){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    </script>
+
 </html>
