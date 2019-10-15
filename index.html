@@ -1,144 +1,23 @@
-<!-- <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>PwaDemo123</title>
+  <title>Weedeo</title>
   <base href="/">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#1976d2">
-<link rel="stylesheet" href="styles.3ff695c00d717f2d2a11.css"></head>
-<body>
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link rel="stylesheet" href="styles.b7c71122fe19773e15b9.css"></head>
+<body class="hold-transition skin-purple sidebar-mini">
   <app-root></app-root>
-  <noscript>Please enable JavaScript to continue using this application.</noscript>
-<script src="runtime-es2015.858f8dd898b75fe86926.js" type="module"></script><script src="polyfills-es2015.5728f680576ca47e99fe.js" type="module"></script><script src="runtime-es5.741402d1d47331ce975c.js" nomodule></script><script src="polyfills-es5.7f43b971448d2fb49202.js" nomodule></script><script src="main-es2015.d12c05e9b7d2ead2cce3.js" type="module"></script><script src="main-es5.9b1b2fe682097172cc84.js" nomodule></script></body>
-</html> -->
-<html>
-
-<head>
-    <style>
-    </style>
-</head>
-
-<body>
-    <p>canvas</p>
-    <div>
-        <button onclick=changecolor('#cb3594')>purple</button>
-        <button onclick=changecolor('#659b41')>green</button>
-        <button onclick=changecolor('#ffcf33')>yellow</button>
-        <button onclick=changecolor('#986928')>brown</button>
-        
-        <span style='font-size:20px; cursor:pointer;' onclick=changeSize('1')> &#9679;</span>
-        <span style='font-size:26px; cursor:pointer;' onclick=changeSize('5')> &#9679;</span>
-        <span style='font-size:32px; cursor:pointer;' onclick=changeSize('8')> &#9679;</span>
-        <span style='font-size:38px; cursor:pointer;' onclick=changeSize('15')> &#9679;</span>
-        <span style='font-size:44px; cursor:pointer;' onclick=changeSize('20')> &#9679;</span>
-        
-        <button onclick=changecolor('#ffffff')>eraser</button>
-        <button onclick=clearCanvas()>clear</button>
-        
-        <div id="canvasDiv"></div>
-    </div>
-
-</body>
-<script>
-    var curColor = '#cb3594';
-    var clickColor = new Array();
-
-    var curSize = "1";
-    var clickSize = new Array();
-
-    var clickX = new Array();
-    var clickY = new Array();
-    var clickDrag = new Array();
-    var paint;
-
-
-    function changecolor(val) {
-        curColor = val
-    }
-    function changeSize(val) {
-        curSize = val
-    }
-
-    function addClick(x, y, dragging) {
-        clickX.push(x);
-        clickY.push(y);
-        clickDrag.push(dragging);
-        clickColor.push(curColor);
-        clickSize.push(curSize);
-    }
-
-    var canvasDiv = document.getElementById('canvasDiv');
-    canvas = document.createElement('canvas');
-    canvas.setAttribute('width', 1000);
-    canvas.setAttribute('height', 1000);
-    canvas.setAttribute('id', 'canvas');
-    canvasDiv.appendChild(canvas);
-    if (typeof G_vmlCanvasManager != 'undefined') {
-        canvas = G_vmlCanvasManager.initElement(canvas);
-    }
-    context = canvas.getContext("2d");
-
-    document.getElementById("canvas").addEventListener("mousedown", (function (e) {
-        var mouseX = e.pageX - this.offsetLeft;
-        var mouseY = e.pageY - this.offsetTop;
-
-        paint = true;
-        addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-        redraw();
-    }));
-    document.getElementById("canvas").addEventListener("mouseleave", (function (e) {
-        paint = false;
-    }));
-    document.getElementById("canvas").addEventListener("mouseup", (function (e) {
-        paint = false;
-    }));
-
-    document.getElementById("canvas").addEventListener("mousemove", (function (e) {
-        if (paint) {
-            addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-            redraw();
-        }
-    }));
-
-
-    function redraw() {
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-
-        // context.strokeStyle = curColor;
-        context.lineJoin = "round";
-        // context.lineWidth = 2;
-
-        for (var i = 0; i < clickX.length; i++) {
-            context.beginPath();
-            if (clickDrag[i] && i) {
-                context.moveTo(clickX[i - 1], clickY[i - 1]);
-            } else {
-                context.moveTo(clickX[i] - 1, clickY[i]);
-            }
-            context.lineTo(clickX[i], clickY[i]);
-            context.closePath();
-            context.strokeStyle = clickColor[i];
-            context.lineWidth = clickSize[i];
-            context.stroke();
-        }
-    }
-
-    function clearCanvas() {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        clickX = [];
-        clickY = [];
-        clickDrag = [];
-        clickColor = [];
-        if (curColor == '#ffffff') { curColor = '#cb3594' }
-        clickColor.push(curColor);
-        clickSize = []
-
-        // curColor = '#cb3594';
-    }
-</script>
-
+<script src="runtime-es2015.e8a2810b3b08d6a1b6aa.js" type="module"></script><script src="runtime-es5.e8a2810b3b08d6a1b6aa.js" nomodule defer></script><script src="polyfills-es5.2b9ce34c123ac007a8ba.js" nomodule defer></script><script src="polyfills-es2015.0ef207fb7b4761464817.js" type="module"></script><script src="scripts.48345165fd3595ea610e.js" defer></script><script src="main-es2015.48a0d7736dd7e7423225.js" type="module"></script><script src="main-es5.48a0d7736dd7e7423225.js" nomodule defer></script></body>
 </html>
