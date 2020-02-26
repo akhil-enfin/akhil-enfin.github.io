@@ -1,0 +1,39 @@
+
+
+service: gettokenwithauth 
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+functions:
+  Auth:
+    handler: _handler.auth
+    # events:
+    #   - http:
+    #       path: /
+    #       method: ANY
+    #       cors: true
+    #       request:
+    #         parameters:
+    #           querystrings:
+    #             token: true
+    #             uid: true
+  Gettoken:
+    handler: _handler.gettoken
+    events:
+      - http:
+          path: /p
+          method: GET
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                url: true
+                count: true
+      # - http:
+      #     path: /{proxy+}
+      #     method: ANY
+      #     cors: true
+plugins:
+  - serverless-offline
+

@@ -1,23 +1,50 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Weedeo</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="flowplayer.quality-selector.css" />
+    <link rel="stylesheet" href="skin.css" />
+    <script src="flowplayer.min.js"></script>
+    <script src="flowplayer.vod-quality-selector.min.js"></script>
+    <script src="flowplayertokens.js"></script>
+    <script src="hls.min.js"></script>
+    <style>
+      #player {
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>player</h1>
 
-  <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-<link rel="stylesheet" href="styles.b7c71122fe19773e15b9.css"></head>
-<body class="hold-transition skin-purple sidebar-mini">
-  <app-root></app-root>
-<script src="runtime-es2015.e8a2810b3b08d6a1b6aa.js" type="module"></script><script src="runtime-es5.e8a2810b3b08d6a1b6aa.js" nomodule defer></script><script src="polyfills-es5.2b9ce34c123ac007a8ba.js" nomodule defer></script><script src="polyfills-es2015.0ef207fb7b4761464817.js" type="module"></script><script src="scripts.48345165fd3595ea610e.js" defer></script><script src="main-es2015.48a0d7736dd7e7423225.js" type="module"></script><script src="main-es5.48a0d7736dd7e7423225.js" nomodule defer></script></body>
+    <div id="player">#player</div>
+
+    <script>
+      async function init() {
+        await TGN.fetchTokens();
+        var player = flowplayer("#player", {
+          embed: false,
+          hlsQualities: true,
+          seekable: true,
+          clip: {
+            sources: [
+              {
+                type: "application/x-mpegurl",
+                src:
+                  "https://0zf9n6n7qh.execute-api.us-east-1.amazonaws.com/dev/researchakhil/ff5a0430b6740fab7eeabca167369574/ff5a0430b6740fab7eeabca167369574.m3u8?token=" +
+                  TGN.tokens.pop() +
+                  "&uid=" +
+                  TGN.uid
+              }
+              // { type: "application/x-mpegurl", src: 'http://localhost:3000/db23d7ad42ffaf5eb1f7d7fcd1765340/db23d7ad42ffaf5eb1f7d7fcd1765340.m3u8' }
+            ],
+            qualities: ["240p", "360p", "480p", "720p", "1080p"],
+            defaultQuality: "480p"
+          }
+        });
+      }
+      init();
+    </script>
+  </body>
 </html>
